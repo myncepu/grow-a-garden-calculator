@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:basecoatui.com)",
+      "Bash(grep:*)",
+      "Bash(sed:*)"
+    ],
+    "deny": []
+  }
+}

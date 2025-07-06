@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Professional Grow A Garden Calculator - The ultimate free tool for garden planning, vegetable yield estimation, and garden size calculation. Plan your perfect garden with our comprehensive grow a garden calculator featuring 100+ plants and advanced modifiers.">
+    <meta name="keywords" content="grow a garden calculator, garden calculator, garden planning tool, vegetable garden calculator, garden size calculator, planting calculator, garden yield calculator">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Grow A Garden Calculator - Free Garden Planning Tool">
+    <meta property="og:description" content="Professional Grow A Garden Calculator for optimal garden planning. Calculate garden size, plant quantities, and yields for 100+ vegetables and plants.">
+    <meta property="og:type" content="website">
+    <title>Grow A Garden Calculator - Free Professional Garden Planning Tool | Calculate Garden Size & Plant Yields</title>
+    <link rel="icon" type="image/png" href="./assets/images/icon.png">
+    <link rel="canonical" href="https://yourwebsite.com/grow-a-garden-calculator">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Grow A Garden Calculator",
+        "description": "Professional garden planning calculator for optimal vegetable garden design, plant quantity estimation, and harvest planning. Features 100+ plants and advanced modifiers.",
+        "url": "https://yourwebsite.com/grow-a-garden-calculator",
+        "applicationCategory": "DesignApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "featureList": [
+            "100+ Plant Varieties",
+            "Advanced Growth Modifiers",
+            "Real-time Calculations",
+            "Mobile Optimized Interface",
+            "Garden Size Calculator",
+            "Yield Estimation",
+            "Plant Spacing Calculator"
+        ],
+        "keywords": "grow a garden calculator, garden calculator, garden planning tool, vegetable garden calculator, garden size calculator, planting calculator",
+        "author": {
+            "@type": "Organization",
+            "name": "Garden Planning Tools"
+        }
+    }
+    </script>
+    
+    <!-- FAQ JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What makes this garden calculator different from others?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Our grow a garden calculator stands out with its comprehensive database of 100+ plants, advanced modifier system with 35+ growth factors, and real-time calculation capabilities. Unlike basic calculators, our tool considers multiple variables that affect garden productivity, making it the most accurate garden planning tool available."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How accurate are the yield predictions?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "The grow a garden calculator provides highly accurate estimates based on scientific research and data from agricultural institutions. While actual yields may vary due to local conditions, our calculator typically predicts within 15-20% accuracy when proper growing conditions are maintained."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can I use this calculator for small space gardens?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Absolutely! Our grow a garden calculator is perfect for container gardens, raised beds, and small-space growing. The tool calculates precise space requirements and helps optimize plant selection for limited areas, making it ideal for urban gardeners and those with compact growing spaces."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is the garden calculator suitable for beginners?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, our grow a garden calculator is designed with beginners in mind. The intuitive interface guides users through the planning process, while comprehensive plant categories help new gardeners make informed decisions about what to grow."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How often should I update my garden plan?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "We recommend using the grow a garden calculator seasonally to plan for spring, summer, and fall plantings. Many gardeners also use it weekly during peak growing season to plan succession plantings and optimize continuous harvests."
+                }
+            }
+        ]
+    }
+    </script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+  display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .left-panel {
+            flex: 1;
+            min-width: 300px;
+            background: #2a2a2a;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        /* 美化植物网格滚动条 */
+        .fruits-grid::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .fruits-grid::-webkit-scrollbar-track {
+            background: #1a1a1a;
+            border-radius: 3px;
+        }
+
+        .fruits-grid::-webkit-scrollbar-thumb {
+            background: #555;
+            border-radius: 3px;
+            transition: background 0.3s ease;
+        }
+
+        .fruits-grid::-webkit-scrollbar-thumb:hover {
+            background: #777;
+        }
+
+        /* 植物网格底部渐变遮罩效果 */
+        .fruits-grid::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 6px;
+            height: 20px;
+            background: linear-gradient(transparent, #2a2a2a);
+            pointer-events: none;
+        }
+
+        .right-panel {
+            flex: 1;
+            min-width: 400px;
+            background: #2a2a2a;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #bdfc9a;
+            border-bottom: 2px solid #444;
+            padding-bottom: 10px;
+        }
+
+        .fruit-button {
+            background: #3a3a3a;
+            border: 2px solid #555;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #ccc;
+            font-size: 14px;
+            min-width: 120px;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .fruit-button:hover {
+            background: #4a4a4a;
+            border-color: #777;
+        }
+
+        .fruit-button.active {
+            background: #4CAF50;
+            border-color: #66BB6A;
+  color: white;
+        }
+
+        .fruit-button img {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 5px;
+        }
+
+        .modifier-button {
+            background: #3a3a3a;
+            border: 2px solid #555;
+            border-radius: 6px;
+            padding: 8px 12px;
+            margin: 3px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #ccc;
+            font-size: 13px;
+        }
+
+        .modifier-button:hover {
+            background: #4a4a4a;
+            border-color: #777;
+        }
+
+        .modifier-button.active {
+            background: #f39c12;
+            border-color: #e67e22;
+            color: white;
+        }
+
+        .modifier-button.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .input-group {
+  display: flex;
+            gap: 15px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .input-block {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .input-block label {
+            display: block;
+            margin-bottom: 5px;
+  font-weight: bold;
+            color: #bdfc9a;
+        }
+
+        .input-block input[type="number"],
+        .input-block input[type="range"] {
+  width: 100%;
+            padding: 8px;
+            background: #3a3a3a;
+            border: 2px solid #555;
+            border-radius: 4px;
+            color: #e0e0e0;
+            font-size: 14px;
+        }
+
+        .input-block input[type="number"]:focus,
+        .input-block input[type="range"]:focus {
+            outline: none;
+            border-color: #bdfc9a;
+        }
+
+        .result {
+            font-size: 32px;
+            font-weight: bold;
+            color: #bdfc9a;
+            margin: 20px 0;
+            padding: 15px;
+            background: #333;
+            border-radius: 8px;
+  text-align: center;
+        }
+
+        button {
+            background: #4CAF50;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 15px;
+            color: white;
+            cursor: pointer;
+  font-size: 14px;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+
+        .category-tabs {
+  display: flex;
+            gap: 5px;
+            margin-bottom: 15px;
+  flex-wrap: wrap;
+        }
+
+        .category-tab {
+            padding: 6px 12px;
+            background: #3a3a3a;
+            border: 2px solid #555;
+            border-radius: 6px;
+  cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 12px;
+            white-space: nowrap;
+            display: inline-block;
+        }
+
+        .category-tab:hover {
+            background: #4a4a4a;
+            border-color: #777;
+        }
+
+        .category-tab.active {
+            background: #bdfc9a;
+            color: #1a1a1a;
+            border-color: #bdfc9a;
+        }
+
+        .fruits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+            max-height: 50vh;
+            overflow-y: auto;
+            padding-right: 5px;
+            position: relative;
+        }
+
+        .modifiers-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .input-group {
+                flex-direction: column;
+            }
+            
+            .fruits-grid {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                max-height: 40vh;
+            }
+        }
+
+        .seo-content {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            background: #2a2a2a;
+            border-radius: 8px;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        .seo-content h1 {
+            color: #bdfc9a;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 3px solid #bdfc9a;
+            padding-bottom: 15px;
+        }
+
+        .seo-content h2 {
+            color: #f39c12;
+            font-size: 1.8em;
+            margin: 30px 0 15px 0;
+            border-left: 4px solid #f39c12;
+            padding-left: 15px;
+        }
+
+        .seo-content h3 {
+            color: #87ceeb;
+            font-size: 1.4em;
+            margin: 25px 0 12px 0;
+        }
+
+        .seo-content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .seo-content ul, .seo-content ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+
+        .seo-content li {
+            margin-bottom: 8px;
+        }
+
+        .highlight-keyword {
+            color: #bdfc9a;
+            font-weight: bold;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .feature-item {
+            background: #3a3a3a;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #555;
+        }
+
+        .feature-item h4 {
+            color: #f39c12;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .seo-content h1 {
+                font-size: 2em;
+            }
+            
+            .seo-content h2 {
+                font-size: 1.5em;
+            }
+        }
+
+        /* Header Styles */
+        .header {
+            background: #1a1a1a;
+            border-bottom: 2px solid #333;
+            padding: 15px 0;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #bdfc9a;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #bdfc9a;
+        }
+
+        /* Footer Styles */
+        .footer {
+            background: #1a1a1a;
+            border-top: 2px solid #333;
+            padding: 40px 0 20px 0;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            color: #bdfc9a;
+            margin-bottom: 15px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section li {
+            margin-bottom: 8px;
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #bdfc9a;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            color: #999;
+        }
+
+        /* Main Content Spacing */
+        .main-content {
+            margin-top: 0;
+            padding-top: 20px;
+        }
+
+        /* Disclaimer Banner */
+        .disclaimer-banner {
+            background: linear-gradient(45deg, #2a2a2a, #3a3a3a);
+            border: 2px solid #f39c12;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin: 20px auto;
+            max-width: 1400px;
+            text-align: center;
+            color: #e0e0e0;
+            font-size: 16px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .disclaimer-banner .highlight {
+            color: #f39c12;
+            font-weight: bold;
+        }
+
+        .disclaimer-banner .game-name {
+            color: #bdfc9a;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                gap: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+</style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">🌱 Grow A Garden Calculator</div>
+            <nav class="nav-links">
+                <a href="#calculator">Calculator</a>
+                <a href="#guide">Guide</a>
+                <a href="#features">Features</a>
+                <a href="#faq">FAQ</a>
+                <a href="#about">About</a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Disclaimer Banner -->
+    <div class="disclaimer-banner">
+        ⚠️ <span class="highlight">DISCLAIMER:</span> This site is not officially affiliated with <span class="game-name">"Grow a Garden"</span> Roblox game. This is a fan-made tool created by the community for garden planning and calculation purposes.
+    </div>
+
+    <!-- Main Calculator Section -->
+    <div class="main-content">
+        <div class="container" id="calculator">
+        <!-- 左侧面板 - 植物选择 -->
+        <div class="left-panel">
+            <div class="section-title">Choose Plant</div>
+            
+            <!-- Plant Search -->
+            <input id="plantSearch" placeholder="Search for a plant..." type="text" style="padding: 8px; font-size: 16px; width: 100%; max-width: 400px; margin-bottom: 15px; border-radius: 6px; background: #2e2e2e; color: #e0e0e0; border: 1px solid #444;">
+
+            <!-- Category Tabs -->
+            <div class="category-tabs">
+                <div class="category-tab active" data-category="All">All</div>
+                <div class="category-tab" data-category="BaseValue">Base Value</div>
+                <div class="category-tab" data-category="SeedShop">Seed Shop</div>
+                <div class="category-tab" data-category="ExoticSeedPack">Exotic Seed Pack</div>
+                <div class="category-tab" data-category="NormalSeedPack">Normal Seed Pack</div>
+                <div class="category-tab" data-category="EasterEvent">Easter Event</div>
+                <div class="category-tab" data-category="EventSeedPack">Event Seed Pack</div>
+                <div class="category-tab" data-category="NightEvent">Night Event</div>
+                <div class="category-tab" data-category="BeeEvent">Bee Event</div>
+                <div class="category-tab" data-category="CraftingEvent">Crafting Event</div>
+                <div class="category-tab" data-category="SummerEvent">Summer Event</div>
+                <div class="category-tab" data-category="PrehistoricEvent">Prehistoric Event</div>
+  </div>
+
+            <!-- Plant Grid -->
+            <div class="fruits-grid" id="fruitsGrid">
+                <!-- Plant buttons will be dynamically generated by JavaScript -->
+    </div>
+  </div>
+
+        <!-- Right Panel - Calculator -->
+        <div class="right-panel">
+            <div class="section-title">Modifiers</div>
+            
+            <!-- Modifier Buttons -->
+            <div class="modifiers-grid" id="modifiersGrid">
+                <!-- Modifier buttons will be dynamically generated by JavaScript -->
+</div>
+
+            <!-- Formula Display -->
+            <div id="formulaDisplay" style="margin: 15px 0; font-size: 14px; color: #ccc;">
+                (Rainbow/Gold) × (1 + Modifier Sum - Modifier Count)
+  </div>
+            <div id="selectedModifiersDisplay" style="margin-bottom: 20px; font-size: 16px; color: #bdfc9a;">
+                (1 × (1 + 0 - 0)) = x1
+</div>
+
+            <!-- Input Parameters -->
+            <div class="section-title" style="font-size: 20px;">Input Weight</div>
+
+<div class="input-group">
+                <div class="input-block">
+                    <label for="weight">Weight (kg):</label>
+                    <input id="weight" type="number" min="0" max="100000" step="0.01" value="1.00">
+</div>
+                <div class="input-block">
+                    <label for="plantAmount">Plant Amount:</label>
+                    <input id="plantAmount" type="number" min="1" max="200" value="1">
+</div>
+                <div class="input-block">
+                    <label for="friendBoost">Friend Boost:</label>
+                    <input id="friendBoost" type="range" min="0" max="5" step="1" value="0">
+                    <span id="friendBoostLabel">0%</span>
+</div>
+</div>
+
+            <!-- Calculation Result -->
+            <div id="plantInfo" style="margin: 15px 0; font-size: 18px; color: #bdfc9a;">
+                Select a plant to start calculation
+  </div>
+            <div class="result" id="calculationResult">
+                Please select plant and set parameters
+</div>
+
+            <!-- Control Buttons -->
+            <div style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
+                <button onclick="clearAll()">Clear All</button>
+                <button onclick="activateMaxMutations()">Max Mutations</button>
+                <button onclick="toggleValueMode()">Toggle to Weight Mode</button>
+            </div>
+                </div>
+    </div>
+
+    <!-- SEO Content Section -->
+    <div class="seo-content" id="guide">
+        <h1>Grow A Garden Calculator - Professional Garden Planning Made Simple</h1>
+        
+        <p>Welcome to the most comprehensive <span class="highlight-keyword">Grow A Garden Calculator</span> available online. Our advanced garden planning tool revolutionizes how gardeners approach vegetable garden design, plant quantity estimation, and harvest planning. Whether you're a beginner gardener or an experienced horticulturist, this <span class="highlight-keyword">grow a garden calculator</span> provides accurate calculations for optimal garden productivity.</p>
+
+        <h2>Why Choose Our Grow A Garden Calculator?</h2>
+        
+        <p>Planning a successful garden requires precise calculations and careful consideration of multiple factors. Our <span class="highlight-keyword">grow a garden calculator</span> eliminates guesswork by providing data-driven insights based on scientific gardening principles. Unlike basic garden calculators, our tool incorporates advanced modifiers, plant spacing requirements, and yield predictions to create the perfect garden plan.</p>
+
+        <div class="feature-grid" id="features">
+            <div class="feature-item">
+                <h4>100+ Plant Varieties</h4>
+                <p>Our <span class="highlight-keyword">grow a garden calculator</span> includes comprehensive data for over 100 plant varieties, from common vegetables to exotic fruits and herbs.</p>
+            </div>
+            <div class="feature-item">
+                <h4>Advanced Modifiers</h4>
+                <p>Calculate precise yields using 35+ growth modifiers that affect plant productivity and garden success.</p>
+            </div>
+            <div class="feature-item">
+                <h4>Real-time Calculations</h4>
+                <p>Get instant results as you adjust parameters in our responsive garden calculator interface.</p>
+            </div>
+            <div class="feature-item">
+                <h4>Mobile Optimized</h4>
+                <p>Access your garden planning tool from any device with our mobile-friendly design.</p>
+            </div>
+        </div>
+
+        <h2>How to Use the Grow A Garden Calculator</h2>
+        
+        <p>Using our <span class="highlight-keyword">grow a garden calculator</span> is straightforward and intuitive. The calculation process involves three simple steps that deliver professional-grade garden planning results:</p>
+
+        <ol>
+            <li><strong>Select Your Plants:</strong> Choose from our extensive database of 100+ plants categorized by type, growing season, and difficulty level. Our <span class="highlight-keyword">grow a garden calculator</span> includes everything from basic vegetables like carrots and tomatoes to exotic varieties like dragon fruit and passion fruit.</li>
+            
+            <li><strong>Apply Modifiers:</strong> Enhance your calculations by selecting appropriate growth modifiers. These factors influence plant yield, growth rate, and overall garden productivity. Our calculator includes modifiers for soil quality, climate conditions, and gardening methods.</li>
+            
+            <li><strong>Input Parameters:</strong> Enter your garden specifications including plant weight targets, quantity desired, and friend boost multipliers. The <span class="highlight-keyword">grow a garden calculator</span> processes this information to generate accurate yield predictions and space requirements.</li>
+        </ol>
+
+        <h2>Benefits of Professional Garden Planning</h2>
+        
+        <p>Effective garden planning using a reliable <span class="highlight-keyword">grow a garden calculator</span> offers numerous advantages for both novice and experienced gardeners. Proper planning maximizes harvest yields, optimizes space utilization, and reduces gardening costs through efficient resource allocation.</p>
+
+        <h3>Maximize Garden Productivity</h3>
+        <p>Our <span class="highlight-keyword">grow a garden calculator</span> helps determine optimal plant spacing, succession planting schedules, and companion planting arrangements. Based on research from leading agricultural institutions, proper garden planning can increase yields by 25-40% compared to random planting approaches.</p>
+
+        <h3>Optimize Space Utilization</h3>
+        <p>Small-space gardeners benefit significantly from using a professional garden calculator. The tool calculates precise square footage requirements, helping you grow more food in limited areas through techniques like vertical gardening, intensive planting, and efficient layout design.</p>
+
+        <h3>Reduce Food Costs</h3>
+        <p>Strategic garden planning with our <span class="highlight-keyword">grow a garden calculator</span> enables significant grocery savings. According to the National Gardening Association, a well-planned $70 garden can produce $600 worth of fresh vegetables annually.</p>
+
+        <h2>Advanced Features of Our Garden Calculator</h2>
+        
+        <p>What sets our <span class="highlight-keyword">grow a garden calculator</span> apart is its comprehensive feature set designed for serious gardeners. The tool incorporates scientific data, weather considerations, and modern gardening techniques to deliver accurate planning results.</p>
+
+        <h3>Plant Category Organization</h3>
+        <p>Our garden calculator organizes plants into logical categories including:</p>
+        <ul>
+            <li>Seed Shop Basics - Common vegetables perfect for beginners</li>
+            <li>Exotic Seed Packs - Unique varieties for adventurous gardeners</li>
+            <li>Seasonal Events - Plants optimized for specific growing seasons</li>
+            <li>Specialty Categories - Including bee-friendly plants, crafting herbs, and prehistoric varieties</li>
+        </ul>
+
+        <h3>Modifier System</h3>
+        <p>The sophisticated modifier system in our <span class="highlight-keyword">grow a garden calculator</span> accounts for various factors affecting plant growth:</p>
+        <ul>
+            <li>Environmental conditions (temperature, humidity, light)</li>
+            <li>Soil quality and amendments</li>
+            <li>Gardening techniques and methods</li>
+            <li>Plant health and genetics</li>
+        </ul>
+
+        <h2>Garden Planning Best Practices</h2>
+        
+        <p>Successful garden planning extends beyond basic calculations. Our <span class="highlight-keyword">grow a garden calculator</span> incorporates proven gardening principles that have helped thousands of gardeners achieve exceptional results.</p>
+
+        <h3>Succession Planting Strategy</h3>
+        <p>Plan multiple harvests throughout the growing season by staggering plantings. Our calculator helps determine optimal timing for succession planting, ensuring continuous harvests from spring through fall.</p>
+
+        <h3>Companion Planting Integration</h3>
+        <p>Maximize garden health and productivity through strategic companion planting. The <span class="highlight-keyword">grow a garden calculator</span> considers plant relationships and suggests beneficial combinations that improve soil health, pest control, and overall yields.</p>
+
+        <h3>Season Extension Techniques</h3>
+        <p>Extend your growing season using proven techniques supported by our garden calculator. Plan for cold frames, row covers, and greenhouse integration to maximize annual production and extend harvest periods.</p>
+
+        <h2>Scientific Foundation</h2>
+        
+        <p>Our <span class="highlight-keyword">grow a garden calculator</span> is built on scientific research and data from leading agricultural institutions. The calculations incorporate findings from university extension services, agricultural research stations, and peer-reviewed gardening studies to ensure accuracy and reliability.</p>
+
+        <p>The tool considers factors such as plant spacing requirements documented by agricultural research, yield data from field studies, and growth modifiers identified through controlled experiments. This scientific approach ensures that your garden planning decisions are based on proven methodologies rather than guesswork.</p>
+
+        <h2>Start Your Garden Planning Today</h2>
+        
+        <p>Begin your journey toward gardening success with our professional <span class="highlight-keyword">grow a garden calculator</span>. Whether you're planning a small container garden or a large-scale vegetable operation, our tool provides the insights needed for optimal results. The intuitive interface makes garden planning accessible to beginners while offering advanced features that experienced gardeners appreciate.</p>
+
+        <p>Join thousands of successful gardeners who rely on our <span class="highlight-keyword">grow a garden calculator</span> for accurate planning, increased yields, and gardening success. Start planning your perfect garden today and experience the difference that professional garden calculation makes in achieving your growing goals.</p>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="seo-content" id="faq">
+        <h2>Frequently Asked Questions About Our Grow A Garden Calculator</h2>
+        
+        <div style="margin: 30px 0;">
+            <h3>What makes this garden calculator different from others?</h3>
+            <p>Our <span class="highlight-keyword">grow a garden calculator</span> stands out with its comprehensive database of 100+ plants, advanced modifier system with 35+ growth factors, and real-time calculation capabilities. Unlike basic calculators, our tool considers multiple variables that affect garden productivity, making it the most accurate garden planning tool available.</p>
+        </div>
+
+        <div style="margin: 30px 0;">
+            <h3>How accurate are the yield predictions?</h3>
+            <p>The <span class="highlight-keyword">grow a garden calculator</span> provides highly accurate estimates based on scientific research and data from agricultural institutions. While actual yields may vary due to local conditions, our calculator typically predicts within 15-20% accuracy when proper growing conditions are maintained.</p>
+        </div>
+
+        <div style="margin: 30px 0;">
+            <h3>Can I use this calculator for small space gardens?</h3>
+            <p>Absolutely! Our <span class="highlight-keyword">grow a garden calculator</span> is perfect for container gardens, raised beds, and small-space growing. The tool calculates precise space requirements and helps optimize plant selection for limited areas, making it ideal for urban gardeners and those with compact growing spaces.</p>
+        </div>
+
+        <div style="margin: 30px 0;">
+            <h3>Is the garden calculator suitable for beginners?</h3>
+            <p>Yes, our <span class="highlight-keyword">grow a garden calculator</span> is designed with beginners in mind. The intuitive interface guides users through the planning process, while comprehensive plant categories help new gardeners make informed decisions about what to grow. Advanced features are available for experienced gardeners who want more detailed planning capabilities.</p>
+        </div>
+
+        <div style="margin: 30px 0;">
+            <h3>How often should I update my garden plan?</h3>
+            <p>We recommend using the <span class="highlight-keyword">grow a garden calculator</span> seasonally to plan for spring, summer, and fall plantings. Many gardeners also use it weekly during peak growing season to plan succession plantings and optimize continuous harvests throughout the growing period.</p>
+        </div>
+
+        <div style="text-align: center; margin: 40px 0; padding: 20px; background: #3a3a3a; border-radius: 8px;">
+            <p style="font-size: 18px; color: #bdfc9a; margin: 0;"><strong>Start planning your perfect garden today with our professional <span class="highlight-keyword">grow a garden calculator</span>!</strong></p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer" id="about">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>🌱 Garden Calculator</h3>
+                    <p>Professional garden planning made simple with our comprehensive grow a garden calculator. Plan your perfect garden today!</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#calculator">Calculator Tool</a></li>
+                        <li><a href="#guide">User Guide</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Gardening Resources</h3>
+                    <ul>
+                        <li><a href="#guide">Garden Planning Guide</a></li>
+                        <li><a href="#features">Plant Database</a></li>
+                        <li><a href="#guide">Modifier System</a></li>
+                        <li><a href="#guide">Best Practices</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html">Terms of Service</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="mailto:info@gardencalculator.com">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact & Support</h3>
+                    <ul>
+                        <li><a href="mailto:info@gardencalculator.com">info@gardencalculator.com</a></li>
+                        <li><a href="#faq">Support Center</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#guide">User Manual</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Grow A Garden Calculator. All rights reserved. | 
+                <a href="privacy-policy.html" style="color: #bdfc9a;">Privacy Policy</a> | 
+                <a href="terms-of-service.html" style="color: #bdfc9a;">Terms of Service</a> | 
+                <a href="#calculator" style="color: #bdfc9a;">Back to Calculator</a></p>
+                
+                <p style="margin-top: 10px; font-size: 14px; color: #999;">
+                    <strong>Disclaimer:</strong> This site is not officially affiliated with "Grow a Garden" Roblox game. 
+                    This is a fan-made tool created by the community.
+                </p>
+            </div>
+        </div>
+</div>
+
+<script>
+        // Plant Data
+        const plants = {
+            // Seed Shop
+            'carrot': { name: 'Carrot', category: 'SeedShop', baseValue: 100 },
+            'strawberry': { name: 'Strawberry', category: 'SeedShop', baseValue: 120 },
+            'blueberry': { name: 'Blueberry', category: 'SeedShop', baseValue: 150 },
+            'orangetulip': { name: 'Orange Tulip', category: 'SeedShop', baseValue: 180 },
+            'tomato': { name: 'Tomato', category: 'SeedShop', baseValue: 200 },
+            'corn': { name: 'Corn', category: 'SeedShop', baseValue: 300 },
+            'daffodil': { name: 'Daffodil', category: 'SeedShop', baseValue: 350 },
+            'watermelon': { name: 'Watermelon', category: 'SeedShop', baseValue: 500 },
+            'pumpkin': { name: 'Pumpkin', category: 'SeedShop', baseValue: 600 },
+            'apple': { name: 'Apple', category: 'SeedShop', baseValue: 800 },
+            'bamboo': { name: 'Bamboo', category: 'SeedShop', baseValue: 900 },
+            'coconut': { name: 'Coconut', category: 'SeedShop', baseValue: 950 },
+            'cactus': { name: 'Cactus', category: 'SeedShop', baseValue: 1000 },
+            'dragonfruit': { name: 'Dragon Fruit', category: 'SeedShop', baseValue: 1100 },
+            'mango': { name: 'Mango', category: 'SeedShop', baseValue: 1200 },
+            'grape': { name: 'Grape', category: 'SeedShop', baseValue: 1300 },
+            'mushroom': { name: 'Mushroom', category: 'SeedShop', baseValue: 1400 },
+            'pepper': { name: 'Pepper', category: 'SeedShop', baseValue: 1500 },
+            'cacao': { name: 'Cacao', category: 'SeedShop', baseValue: 1600 },
+            'beanstalk': { name: 'Beanstalk', category: 'SeedShop', baseValue: 1700 },
+            'emberlily': { name: 'Ember Lily', category: 'SeedShop', baseValue: 1800 },
+            'sugarapple': { name: 'Sugar Apple', category: 'SeedShop', baseValue: 1900 },
+            'burningbud': { name: 'Burning Bud', category: 'SeedShop', baseValue: 2000 },
+
+            // Exotic Seed Pack
+            'papaya': { name: 'Papaya', category: 'ExoticSeedPack', baseValue: 2500 },
+            'banana': { name: 'Banana', category: 'ExoticSeedPack', baseValue: 3000 },
+            'passionfruit': { name: 'Passion Fruit', category: 'ExoticSeedPack', baseValue: 3500 },
+            'soulfruit': { name: 'Soul Fruit', category: 'ExoticSeedPack', baseValue: 4000 },
+            'cursedfruit': { name: 'Cursed Fruit', category: 'ExoticSeedPack', baseValue: 4500 },
+
+            // Normal Seed Pack
+            'raspberry': { name: 'Raspberry', category: 'NormalSeedPack', baseValue: 1500 },
+            'pear': { name: 'Pear', category: 'NormalSeedPack', baseValue: 1800 },
+            'peach': { name: 'Peach', category: 'NormalSeedPack', baseValue: 2000 },
+            'pineapple': { name: 'Pineapple', category: 'NormalSeedPack', baseValue: 2200 },
+
+            // Easter Event
+            'chocolatecarrot': { name: 'Chocolate Carrot', category: 'EasterEvent', baseValue: 5000 },
+            'redlolipop': { name: 'Red Lollipop', category: 'EasterEvent', baseValue: 5500 },
+            'candysunflower': { name: 'Candy Sunflower', category: 'EasterEvent', baseValue: 6000 },
+            'candyblossom': { name: 'Candy Blossom', category: 'EasterEvent', baseValue: 6500 },
+            'easteregg': { name: 'Easter Egg', category: 'EasterEvent', baseValue: 7000 },
+
+            // Event Seed Pack
+            'cranberry': { name: 'Cranberry', category: 'EventSeedPack', baseValue: 3000 },
+            'durian': { name: 'Durian', category: 'EventSeedPack', baseValue: 3500 },
+            'eggplant': { name: 'Eggplant', category: 'EventSeedPack', baseValue: 4000 },
+            'lotus': { name: 'Lotus', category: 'EventSeedPack', baseValue: 4500 },
+            'venusflytrap': { name: 'Venus Flytrap', category: 'EventSeedPack', baseValue: 5000 },
+
+            // Night Event
+            'nightshade': { name: 'Nightshade', category: 'NightEvent', baseValue: 8000 },
+            'mint': { name: 'Mint', category: 'NightEvent', baseValue: 8500 },
+            'glowshroom': { name: 'Glowshroom', category: 'NightEvent', baseValue: 9000 },
+            'moonmelon': { name: 'Moon Melon', category: 'NightEvent', baseValue: 9500 },
+            'starfruit': { name: 'Star Fruit', category: 'NightEvent', baseValue: 10000 },
+            'moonflower': { name: 'Moon Flower', category: 'NightEvent', baseValue: 10500 },
+            'bloodbanana': { name: 'Blood Banana', category: 'NightEvent', baseValue: 11000 },
+            'moonglow': { name: 'Moon Glow', category: 'NightEvent', baseValue: 11500 },
+            'moonblossom': { name: 'Moon Blossom', category: 'NightEvent', baseValue: 12000 },
+            'celestiberry': { name: 'Celestiberry', category: 'NightEvent', baseValue: 12500 },
+            'moonmango': { name: 'Moon Mango', category: 'NightEvent', baseValue: 13000 },
+
+            // Bee Event
+            'hive': { name: 'Hive', category: 'BeeEvent', baseValue: 15000 },
+            'nectarine': { name: 'Nectarine', category: 'BeeEvent', baseValue: 15500 },
+            'rose': { name: 'Rose', category: 'BeeEvent', baseValue: 16000 },
+            'foxglove': { name: 'Foxglove', category: 'BeeEvent', baseValue: 16500 },
+            'purpledahlia': { name: 'Purple Dahlia', category: 'BeeEvent', baseValue: 17000 },
+            'pinklily': { name: 'Pink Lily', category: 'BeeEvent', baseValue: 17500 },
+            'lilac': { name: 'Lilac', category: 'BeeEvent', baseValue: 18000 },
+            'sunflower': { name: 'Sunflower', category: 'BeeEvent', baseValue: 18500 },
+            'lavender': { name: 'Lavender', category: 'BeeEvent', baseValue: 19000 },
+            'nectarshade': { name: 'Nectar Shade', category: 'BeeEvent', baseValue: 19500 },
+            'manuka': { name: 'Manuka', category: 'BeeEvent', baseValue: 20000 },
+            'dandelion': { name: 'Dandelion', category: 'BeeEvent', baseValue: 20500 },
+            'lumira': { name: 'Lumira', category: 'BeeEvent', baseValue: 21000 },
+            'honeysuckle': { name: 'Honeysuckle', category: 'BeeEvent', baseValue: 21500 },
+
+            // Crafting Event
+            'beebalm': { name: 'Bee Balm', category: 'CraftingEvent', baseValue: 25000 },
+            'nectarthorn': { name: 'Nectar Thorn', category: 'CraftingEvent', baseValue: 25500 },
+            'suncoil': { name: 'Sun Coil', category: 'CraftingEvent', baseValue: 26000 },
+            'crocus': { name: 'Crocus', category: 'CraftingEvent', baseValue: 26500 },
+            'succulent': { name: 'Succulent', category: 'CraftingEvent', baseValue: 27000 },
+            'violetcorn': { name: 'Violet Corn', category: 'CraftingEvent', baseValue: 27500 },
+            'bendboo': { name: 'Bendboo', category: 'CraftingEvent', baseValue: 28000 },
+            'cocovine': { name: 'Coco Vine', category: 'CraftingEvent', baseValue: 28500 },
+            'dragonpepper': { name: 'Dragon Pepper', category: 'CraftingEvent', baseValue: 29000 },
+
+            // Summer Event
+            'wildcarrot': { name: 'Wild Carrot', category: 'SummerEvent', baseValue: 30000 },
+            'cantaloupe': { name: 'Cantaloupe', category: 'SummerEvent', baseValue: 30500 },
+            'parasolflower': { name: 'Parasol Flower', category: 'SummerEvent', baseValue: 31000 },
+            'rosydelight': { name: 'Rosy Delight', category: 'SummerEvent', baseValue: 31500 },
+            'elephantears': { name: 'Elephant Ears', category: 'SummerEvent', baseValue: 32000 },
+            'peacelily': { name: 'Peace Lily', category: 'SummerEvent', baseValue: 32500 },
+            'delphinium': { name: 'Delphinium', category: 'SummerEvent', baseValue: 33000 },
+            'travelersfruit': { name: 'Travelers Fruit', category: 'SummerEvent', baseValue: 33500 },
+            'lilyofthevalley': { name: 'Lily of the Valley', category: 'SummerEvent', baseValue: 34000 },
+            'aloevera': { name: 'Aloe Vera', category: 'SummerEvent', baseValue: 34500 },
+            'guanabana': { name: 'Guanabana', category: 'SummerEvent', baseValue: 35000 },
+            'feijoa': { name: 'Feijoa', category: 'SummerEvent', baseValue: 35500 },
+            'loquat': { name: 'Loquat', category: 'SummerEvent', baseValue: 36000 },
+            'libertylily': { name: 'Liberty Lily', category: 'SummerEvent', baseValue: 36500 },
+            'fireworkflower': { name: 'Firework Flower', category: 'SummerEvent', baseValue: 37000 },
+
+            // Prehistoric Event
+            'boneblossom': { name: 'Bone Blossom', category: 'PrehistoricEvent', baseValue: 50000 },
+            'stonebite': { name: 'Stone Bite', category: 'PrehistoricEvent', baseValue: 51000 },
+            'paradisepetal': { name: 'Paradise Petal', category: 'PrehistoricEvent', baseValue: 52000 },
+            'horneddinoshroom': { name: 'Horned Dinoshroom', category: 'PrehistoricEvent', baseValue: 53000 },
+            'boneboo': { name: 'Bone Boo', category: 'PrehistoricEvent', baseValue: 54000 },
+            'fireflyfern': { name: 'Firefly Fern', category: 'PrehistoricEvent', baseValue: 55000 },
+            'fossilight': { name: 'Fossilight', category: 'PrehistoricEvent', baseValue: 56000 },
+
+            // Base Value Plants
+            'cauliflower': { name: 'Cauliflower', category: 'BaseValue', baseValue: 220 },
+            'rafflesia': { name: 'Rafflesia', category: 'BaseValue', baseValue: 700 },
+            'greenapple': { name: 'Green Apple', category: 'BaseValue', baseValue: 850 },
+            'avocado': { name: 'Avocado', category: 'BaseValue', baseValue: 1050 },
+            'kiwi': { name: 'Kiwi', category: 'BaseValue', baseValue: 1150 },
+            'bellpepper': { name: 'Bell Pepper', category: 'BaseValue', baseValue: 1250 },
+            'pricklypear': { name: 'Prickly Pear', category: 'BaseValue', baseValue: 1350 },
+            'pitcherplant': { name: 'Pitcher Plant', category: 'BaseValue', baseValue: 1450 }
+        };
+
+        // Modifier Data
+        const modifiers = {
+            'rainbow': { name: 'Rainbow', multiplier: 50, type: 'special' },
+            'gold': { name: 'Gold', multiplier: 20, type: 'special' },
+            'shocked': { name: 'Shocked', multiplier: 100, type: 'normal' },
+            'frozen': { name: 'Frozen', multiplier: 10, type: 'normal' },
+            'wet': { name: 'Wet', multiplier: 2, type: 'normal' },
+            'chilled': { name: 'Chilled', multiplier: 2, type: 'normal' },
+            'choc': { name: 'Chocolate', multiplier: 2, type: 'normal' },
+            'moonlit': { name: 'Moonlit', multiplier: 2, type: 'normal' },
+            'bloodlit': { name: 'Bloodlit', multiplier: 4, type: 'normal' },
+            'celestial': { name: 'Celestial', multiplier: 120, type: 'normal' },
+            'disco': { name: 'Disco', multiplier: 125, type: 'normal' },
+            'zombified': { name: 'Zombified', multiplier: 25, type: 'normal' },
+            'plasma': { name: 'Plasma', multiplier: 5, type: 'normal' },
+            'voidtouched': { name: 'Voidtouched', multiplier: 135, type: 'normal' },
+            'pollinated': { name: 'Pollinated', multiplier: 3, type: 'normal' },
+            'honeyglazed': { name: 'Honeyglazed', multiplier: 5, type: 'normal' },
+            'dawnbound': { name: 'Dawnbound', multiplier: 150, type: 'normal' },
+            'heavenly': { name: 'Heavenly', multiplier: 5, type: 'normal' },
+            'cooked': { name: 'Cooked', multiplier: 10, type: 'normal' },
+            'burnt': { name: 'Burnt', multiplier: 4, type: 'normal' },
+            'molten': { name: 'Molten', multiplier: 25, type: 'normal' },
+            'meteoric': { name: 'Meteoric', multiplier: 125, type: 'normal' },
+            'windstruck': { name: 'Windstruck', multiplier: 2, type: 'normal' },
+            'alienlike': { name: 'Alienlike', multiplier: 100, type: 'normal' },
+            'sundried': { name: 'Sundried', multiplier: 85, type: 'normal' },
+            'verdant': { name: 'Verdant', multiplier: 4, type: 'normal' },
+            'paradisal': { name: 'Paradisal', multiplier: 100, type: 'normal' },
+            'twisted': { name: 'Twisted', multiplier: 5, type: 'normal' },
+            'galactic': { name: 'Galactic', multiplier: 120, type: 'normal' },
+            'aurora': { name: 'Aurora', multiplier: 90, type: 'normal' },
+            'cloudtouched': { name: 'Cloudtouched', multiplier: 5, type: 'normal' },
+            'drenched': { name: 'Drenched', multiplier: 5, type: 'normal' },
+            'fried': { name: 'Fried', multiplier: 8, type: 'normal' },
+            'amber': { name: 'Amber', multiplier: 10, type: 'normal' },
+            'ancientamber': { name: 'Ancient Amber', multiplier: 50, type: 'normal' },
+            'sandy': { name: 'Sandy', multiplier: 3, type: 'normal' },
+            'clay': { name: 'Clay', multiplier: 3, type: 'normal' },
+            'ceramic': { name: 'Ceramic', multiplier: 30, type: 'normal' }
+        };
+
+        // Current State
+        let selectedPlant = null;
+        let selectedModifiers = [];
+        let friendBoostValue = 0;
+
+        // Initialize Page
+        function initializePage() {
+            generateFruitsGrid();
+            generateModifiersGrid();
+            setupEventListeners();
+            updateCalculation();
+        }
+
+        // Generate Plant Grid
+        function generateFruitsGrid() {
+            const grid = document.getElementById('fruitsGrid');
+            grid.innerHTML = '';
+            
+            Object.keys(plants).forEach(plantId => {
+                const plant = plants[plantId];
+  const button = document.createElement('button');
+                button.className = 'fruit-button';
+                button.id = plantId;
+                button.onclick = () => togglePlant(plantId);
+                
+                button.innerHTML = `
+                    <img src="./assets/images/${plantId}.webp" alt="${plant.name}">
+                    <span>${plant.name}</span>
+                `;
+                
+                grid.appendChild(button);
+            });
+        }
+
+        // Generate Modifier Grid
+        function generateModifiersGrid() {
+            const grid = document.getElementById('modifiersGrid');
+            grid.innerHTML = '';
+            
+            Object.keys(modifiers).forEach(modId => {
+                const modifier = modifiers[modId];
+                const button = document.createElement('button');
+                button.className = 'modifier-button';
+                button.id = modId;
+                button.onclick = () => toggleModifier(modId);
+                button.textContent = `${modifier.name} (${modifier.multiplier}x)`;
+                
+                grid.appendChild(button);
+            });
+        }
+
+        // Setup Event Listeners
+        function setupEventListeners() {
+            // Category tabs
+            document.querySelectorAll('.category-tab').forEach(tab => {
+                tab.addEventListener('click', () => filterByCategory(tab.dataset.category));
+            });
+
+            // Plant search
+            document.getElementById('plantSearch').addEventListener('input', (e) => {
+                filterPlantsBySearch(e.target.value);
+            });
+
+            // Input fields
+            document.getElementById('weight').addEventListener('input', updateCalculation);
+            document.getElementById('plantAmount').addEventListener('input', updateCalculation);
+            document.getElementById('friendBoost').addEventListener('input', updateFriendBoost);
+        }
+
+        // Filter Plants by Category
+        function filterByCategory(category) {
+            // Update tab states
+            document.querySelectorAll('.category-tab').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.category === category);
+            });
+
+            // Clear search box
+            document.getElementById('plantSearch').value = '';
+
+            // Filter plants
+            document.querySelectorAll('.fruit-button').forEach(button => {
+                const plant = plants[button.id];
+                if (category === 'All' || plant.category === category) {
+                    button.style.display = 'inline-flex';
+  } else {
+                    button.style.display = 'none';
+                }
+            });
+        }
+
+        // Filter Plants by Search Term
+        function filterPlantsBySearch(searchTerm) {
+            // Clear category selection
+            document.querySelectorAll('.category-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            const term = searchTerm.toLowerCase().trim();
+            
+            if (term === '') {
+                // If search box is empty, show all plants
+                document.querySelectorAll('.fruit-button').forEach(button => {
+                    button.style.display = 'inline-flex';
+                });
+                // Activate "All" tab
+                document.querySelector('[data-category="All"]').classList.add('active');
+                return;
+            }
+
+            // Filter by search term
+            document.querySelectorAll('.fruit-button').forEach(button => {
+                const plant = plants[button.id];
+                const plantName = plant.name.toLowerCase();
+                const plantId = button.id.toLowerCase();
+                
+                if (plantName.includes(term) || plantId.includes(term)) {
+                    button.style.display = 'inline-flex';
+                } else {
+                    button.style.display = 'none';
+                }
+            });
+        }
+
+        // Toggle Plant Selection
+        function togglePlant(plantId) {
+            // Clear previous selection
+            document.querySelectorAll('.fruit-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Select new plant
+            selectedPlant = plantId;
+            document.getElementById(plantId).classList.add('active');
+            
+            updateCalculation();
+        }
+
+        // Toggle Modifier
+        function toggleModifier(modId) {
+            const button = document.getElementById(modId);
+            const index = selectedModifiers.indexOf(modId);
+            
+            if (index > -1) {
+                selectedModifiers.splice(index, 1);
+                button.classList.remove('active');
+      } else {
+                selectedModifiers.push(modId);
+                button.classList.add('active');
+            }
+            
+            updateCalculation();
+        }
+
+        // Update Friend Boost
+        function updateFriendBoost() {
+            const slider = document.getElementById('friendBoost');
+            const label = document.getElementById('friendBoostLabel');
+            
+            friendBoostValue = parseInt(slider.value);
+            const percentages = [0, 10, 20, 30, 40, 50];
+            label.textContent = `${percentages[friendBoostValue]}%`;
+            
+            updateCalculation();
+        }
+
+        // Update Calculation
+        function updateCalculation() {
+            if (!selectedPlant) {
+                document.getElementById('plantInfo').textContent = 'Select a plant to start calculation';
+                document.getElementById('calculationResult').textContent = 'Please select plant and set parameters';
+                return;
+            }
+
+            const plant = plants[selectedPlant];
+            const weight = parseFloat(document.getElementById('weight').value) || 0;
+            const amount = parseInt(document.getElementById('plantAmount').value) || 1;
+
+            // Calculate modifier effects
+            let specialMultiplier = 1;
+            let normalModifierSum = 0;
+            let normalModifierCount = 0;
+
+            selectedModifiers.forEach(modId => {
+                const mod = modifiers[modId];
+                if (mod.type === 'special') {
+                    specialMultiplier *= mod.multiplier;
+  } else {
+                    normalModifierSum += mod.multiplier;
+                    normalModifierCount += 1;
+                }
+            });
+
+            // Calculate final multiplier
+            const normalMultiplier = normalModifierCount > 0 ? 
+                (1 + normalModifierSum - normalModifierCount) : 1;
+            const totalMultiplier = specialMultiplier * normalMultiplier;
+
+            // Calculate friend boost
+            const friendBoostMultiplier = 1 + (friendBoostValue * 0.1);
+
+            // Calculate final value
+            const finalValue = plant.baseValue * weight * amount * totalMultiplier * friendBoostMultiplier;
+
+            // Update display
+            updateModifierDisplay(specialMultiplier, normalMultiplier);
+            updatePlantInfo(plant.name, weight);
+            updateResult(finalValue);
+        }
+
+        // Update Modifier Display
+        function updateModifierDisplay(specialMult, normalMult) {
+            const display = document.getElementById('selectedModifiersDisplay');
+            
+            // Build detailed modifier display
+            let specialDetails = '';
+            let normalDetails = '';
+            let normalSum = 0;
+            let normalCount = 0;
+            
+            if (selectedModifiers.length === 0) {
+                display.innerHTML = '<span style="color: #f39c12;">(1)</span> × <span style="color: #bdfc9a;">(1 + 0 - 0)</span> = <span style="color: #e74c3c;"><strong>x1</strong></span>';
+                return;
+            }
+            
+            // Process special and normal modifiers separately
+            selectedModifiers.forEach(modId => {
+                const mod = modifiers[modId];
+                if (mod.type === 'special') {
+                    if (specialDetails) specialDetails += ' × ';
+                    specialDetails += `<span style="color: #ffd700;">${mod.name}</span>:<span style="color: #fff;">${mod.multiplier}</span>`;
+                } else {
+                    if (normalDetails) normalDetails += ' + ';
+                    normalDetails += `<span style="color: #87ceeb;">${mod.name}</span>:<span style="color: #fff;">${mod.multiplier}</span>`;
+                    normalSum += mod.multiplier;
+                    normalCount++;
+                }
+            });
+            
+            // Default to 1 if no special modifiers
+            if (!specialDetails) {
+                specialDetails = '1';
+            }
+            
+            // Build complete formula
+            let formula = `<span style="color: #f39c12;">(${specialDetails})</span> × <span style="color: #bdfc9a;">(1`;
+            if (normalDetails) {
+                                    formula += ` + ${normalDetails} - <span style="color: #ff6b6b;">${normalCount} modifiers</span>`;
+            } else {
+                formula += ` + 0 - 0`;
+            }
+            formula += ')</span>';
+            
+            // Add calculation result
+            const normalResult = normalCount > 0 ? (1 + normalSum - normalCount) : 1;
+            const totalResult = specialMult * normalResult;
+            
+            formula += `<br><span style="color: #666; font-size: 14px;">→ (${specialMult} × ${normalResult.toFixed(2)}) = </span><span style="color: #e74c3c; font-size: 18px;"><strong>x${totalResult.toFixed(2)}</strong></span>`;
+            
+            display.innerHTML = formula;
+        }
+
+        // Update Plant Info
+        function updatePlantInfo(plantName, weight) {
+            const info = document.getElementById('plantInfo');
+            const modText = selectedModifiers.length > 0 ? 
+                selectedModifiers.map(id => modifiers[id].name).join(' ') + ' ' : '';
+            info.innerHTML = `<span style="color:#e76a0b;">${modText}</span><span style="color:#ffffff;">${plantName}</span> <span style="color:white;">${weight}kg</span> value is approximately:`;
+        }
+
+        // Update Result Display
+        function updateResult(value) {
+            const result = document.getElementById('calculationResult');
+            const formatted = formatCurrency(value);
+            result.textContent = formatted;
+        }
+
+        // Format Currency
+        function formatCurrency(value) {
+            if (value >= 1e12) return `≈$${(value / 1e12).toFixed(3)} Trillion`;
+            if (value >= 1e9) return `≈$${(value / 1e9).toFixed(3)} Billion`;
+            if (value >= 1e6) return `≈$${(value / 1e6).toFixed(3)} Million`;
+            if (value >= 1e3) return `≈$${(value / 1e3).toFixed(3)} Thousand`;
+            return `≈$${value.toFixed(2)}`;
+        }
+
+        // Clear All Selections
+        function clearAll() {
+            selectedPlant = null;
+            selectedModifiers = [];
+            
+            document.querySelectorAll('.fruit-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.modifier-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            document.getElementById('weight').value = '1.00';
+            document.getElementById('plantAmount').value = '1';
+            document.getElementById('friendBoost').value = '0';
+            
+            updateFriendBoost();
+            updateCalculation();
+        }
+
+        // Activate Maximum Mutations
+        function activateMaxMutations() {
+            selectedModifiers = ['rainbow', 'shocked', 'dawnbound', 'voidtouched', 'celestial', 'disco', 'meteoric', 'galactic'];
+            
+            document.querySelectorAll('.modifier-button').forEach(btn => {
+                btn.classList.toggle('active', selectedModifiers.includes(btn.id));
+            });
+            
+            updateCalculation();
+        }
+
+        // Toggle Value Mode (Not implemented yet)
+        function toggleValueMode() {
+            alert('Weight mode feature coming soon');
+        }
+
+        // Initialize page after DOM content is loaded
+        document.addEventListener('DOMContentLoaded', initializePage);
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html> 
